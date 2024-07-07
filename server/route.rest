@@ -1,0 +1,100 @@
+GET http://localhost:5000/products
+
+
+###
+
+
+GET http://localhost:5000/products/66857fdfb6df55359092a9e3
+
+
+###
+
+
+POST http://localhost:5000/products
+Content-Type: application/json
+
+{
+    "image_url": "https://theyetee.com/cdn/shop/files/A_strangesadness_e20270a0-c962-4671-9203-129c5ffe7df7_640x.jpg?v=1719724093",
+    "name": "A Strange Sadness As Dusk Falls",
+    "price": "15.99",
+    "type": ["Sueter", "Ropa"],
+    "sizes": ["S", "XS", "XL"]
+}
+
+
+###
+
+GET http://localhost:5000/products/?name=sueter%20gen
+
+###
+
+###
+
+GET http://localhost:5000/products/search
+
+###
+
+
+POST http://localhost:5000/users/register
+Content-Type: application/json
+
+{
+    "name": "Diego",
+    "last_name": "Arroyo",
+    "email": "ex@gmail.com",
+    "password": "ULTIMATE123!",
+    "verPassword": "ULTIMATE123!",            
+    "birth_date": "2024-07-04",
+    "height": 150,
+    "weight": 150
+}
+
+###
+
+GET http://localhost:5000/auth/profile/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4QGdtYWlsLmNvbSIsImlhdCI6MTcyMDMyNDU4MCwiZXhwIjoxNzIwMzI0NTgyfQ.XWuLpYySo8fsuOdXOb0Y43pAo6m712ZIZZv2oprW0kU
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "ex@gmail.com",
+    "password": "ULTIMATE123!"
+}
+
+###                 
+
+
+POST http://localhost:5000/carts
+Content-Type: application/json
+
+{
+    "user_id": "66861b8ed7ef37ffb6a607d3",
+    "items": {
+        "productId": "6688c381ef2c53ee4c44ab4d",
+        "quantity": "3",
+        "size": "L"
+    }
+}
+
+
+###
+
+GET http://localhost:5000/carts/66861b8ed7ef37ffb6a607d3
+
+
+
+###
+
+POST http://localhost:5000/carts/66861b8ed7ef37ffb6a607d3
+Content-Type: application/json
+
+{
+    "productId": "6688c358ef2c53ee4c44ab4b",
+    "quantity": 2
+}
+
+
+###
+
