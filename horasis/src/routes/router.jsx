@@ -10,11 +10,11 @@ import ContactPage from "../components/pages/contact-page";
 import HomePage from "../components/pages/home-page";
 import Login from "../components/pages/login-page";
 import PerfilUsuario from "../components/pages/perfil-page";
+import PreviewPage from "../components/pages/preview_page/preview-page";
 import PrivacyPage from "../components/pages/privacy-page";
 import PaginaProducto from "../components/pages/product-page";
 import Register from "../components/pages/register-page";
 import ResultsPage from "../components/pages/results-page";
-import RopaPage from "../components/pages/ropa-page";
 import TerminosPage from "../components/pages/terms-page";
 
 
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
 
   {
     path: "/preview",
-    element: <RopaPage />
+    element: <PreviewPage></PreviewPage>
   },
 
   {
@@ -112,7 +112,7 @@ const router = createBrowserRouter([
 
   {
     path: "/carrito",
-    element: <CarritoPage></CarritoPage>
+    element: <PrivateRoute><CarritoPage></CarritoPage></PrivateRoute>
   },
 
   {

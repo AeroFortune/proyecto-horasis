@@ -1,24 +1,67 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/auth";
 import Footer from "../navigation/footer";
 import Header from "../navigation/header";
+
 
 function CarritoPage() {
 
     const [cartData, setCartData] = useState(null);
+    const { user, error } = useAuth()
+    const [cartItemsData, setCartItemsData] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    function getQuantity(productId) {
+        if (!cartData) return null;
+
+        const item = cartData.items.find(item => item.productId === productId);
+        return item ? item.quantity : 0;
+    }
+
+    const calculateTotalPrice = () => {
+        if (!cartItemsData) return; // Salir si no hay datos de productos
+
+        let total = 0;
+        cartItemsData.forEach(product => {
+            const quantity = getQuantity(product._id.toString());
+            total += product.price * quantity;
+        });
+
+        setTotalPrice(total);
+    };
+
     useEffect(() => {
 
         const fetchData = async () => {
             try {
 
-                const currentUserId = "66861b8ed7ef37ffb6a607d3"
+                if (!user) {
+                    return;
+                }
+
+                console.log(user)
+
+                const currentUserId = user._id.toString()
                 // Proceso para conseguir token -> agarrar del token la ID del usuario
 
                 const response = await axios.get(`http://localhost:5000/carts/${currentUserId}`);
                 setCartData(response.data);
                 console.log(response.data);
 
+                const productIds = response.data.items.map(item => item.productId.toString());
+                const promises = productIds.map(async (productId) => {
+                    const productResponse = await axios.get(`http://localhost:5000/products/${productId}`);
+                    console.log(productResponse)
+                    return productResponse.data; // Retorna los datos del producto
+                });
 
+                // Esperar a que todas las llamadas se completen
+                const productsData = await Promise.all(promises);
+
+                // Guardar los datos de los productos en el estado
+                setCartItemsData(productsData);
+                console.log(cartItemsData)
 
             } catch (error) {
                 console.error(error)
@@ -29,18 +72,11 @@ function CarritoPage() {
 
     }, []);
 
-    const cartItems = [
-        <li className="cart-item">
-            <img src="https://img2.finalfantasyxiv.com/f/5c7361031b3a3d38ed26034dde5d1a3c_72c48f093f2278ac3243962d3eb6a8d7fc0.jpg?1720329818" alt="item1" className="cart-item-image" />
-            <div className="cart-item-details">
-                <h2>dumbass</h2>
-                <p>$as many as needed</p>
-            </div>
-            <div className="cart-item-quantity">
-                <span>Cantidad: <br></br>1</span>
-            </div>
-        </li>
-    ]
+    useEffect(() => {
+        calculateTotalPrice();
+    }, [cartItemsData, cartData]);
+
+
 
     return (
         <>
@@ -48,20 +84,28 @@ function CarritoPage() {
             <div className="cart-container">
                 <div className="cart-header">
                     <h1>Carrito</h1>
-                    <span>3 artículos</span>
                 </div>
                 <div className="cart-content">
                     <ul className="cart-items">
-                        {cartItems}
-                        {cartItems}
-                        {cartItems}
-                        {cartItems}
+                        {cartItemsData && cartItemsData.map((product, index) => (
+                            <li key={index} className="cart-item">
+                                <img src={product.image_url} alt={`item${index + 1}`} className="cart-item-image" />
+                                <div className="cart-item-details">
+                                    <h2>{product.name}</h2>
+                                    <p>${product.price}</p>
+                                </div>
+                                <div className="cart-item-quantity">
+                                    <span>Cantidad: <br></br>{getQuantity(product._id.toString())}</span> {/* Puedes ajustar esta parte según la cantidad real */}
+                                </div>
+                            </li>
+                        ))}
                     </ul>
                     <div className="cart-summary">
                         <h2>Resumen</h2>
-                        <p>Subtotal artículos: 1742,49€</p>
-                        <h3>Total (Impuestos incluidos): 1742,49€</h3>
+                        <h2>Total (Impuestos incluidos): <br /> ${totalPrice.toFixed(2)}</h2>
                         <button className="checkout-button">Realizar pedido</button>
+
+
                     </div>
                 </div>
             </div>
