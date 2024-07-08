@@ -14,8 +14,8 @@ POST http://localhost:5000/products
 Content-Type: application/json
 
 {
-    "image_url": "https://theyetee.com/cdn/shop/files/B_BunnyPileup-5Color_640x.jpg?v=1715005179",
-    "name": "Bunny Pile - Usagi Shima",
+    "image_url": "https://i.imgur.com/cFYlCMi.png",
+    "name": "Sueter Negro",
     "price": "17.99",
     "type": ["Sueter", "Ropa", "Cute"],
     "sizes": ["S", "M", "L", "XS", "XL"]

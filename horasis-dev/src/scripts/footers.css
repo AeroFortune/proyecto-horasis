@@ -1,0 +1,139 @@
+/*terminos y condiciones , Privacidad*/
+.body-TyM {
+    margin-left: auto;
+    width: 60%;
+    margin-right: auto;
+    line-height: 1.6;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.body-TyM h1{
+    color: white
+}
+
+.privacidad-body{
+    line-height: 1.6;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.privacidad-body p{ 
+    text-align: justify ;
+}
+
+.privacidad-body h1{
+    text-align: center;
+}
+
+.content {
+    text-align: justify;
+}
+  
+  #title{
+    text-align: center;
+  }
+  
+  /* Estilos específicos para párrafos */
+  .paragraph {
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos específicos para encabezados */
+  .section-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  /*contactenos*/
+  
+  .contact-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  
+  .form-body {
+    display: flex;
+    background: white;
+    padding: 70px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    height: 800;
+  }
+
+  .right-section{
+    width: 50%;
+  }
+
+  .left-section{
+    width: 50%;
+    margin-right: 5%;
+  }
+
+  .contact-text-pag{
+    color: black;
+  }
+  
+  .campo-grup {
+    margin-bottom: 20px;
+  }
+  
+  .camp {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .imputs {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: bord    er-box;
+    font-size: 16px;
+  }
+  
+  .button {
+    width: 100%;
+    height: 80px;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  .camp-name{
+    margin-top: 20px;
+    font-size: 26px;
+    color: #333;
+    text-align: left;
+  }
+  .camp-title{
+    margin-top: 20px;
+    font-size: 36px;
+    color: #333;
+    text-align: left;
+  }
+
+.message{
+    height: 380px;
+}
+
+.privacy-section{
+    margin-left: auto;
+    margin-right: auto;
+}
