@@ -8,34 +8,41 @@ import Avatar from './Avatar';
 import ControlGroup from './ControlGroup';
 import DropZone from './DropZone';
 import './ropa.css';
-import zapato1 from '/home/aerofortune/Coding/Web/proyecto-horasis/horasis/src/assets/preview_assets/calzado/zapato1.png';
-import zapato2 from '/src/assets/preview_assets/calzado/zapato2.png';
-import zapato3 from '/src/assets/preview_assets/calzado/zapato3.png';
-import pantalon1 from '/src/assets/preview_assets/inferior/pantalon1.png';
-import pantalon2 from '/src/assets/preview_assets/inferior/pantalon2.png';
-import pantalon3 from '/src/assets/preview_assets/inferior/pantalon3.png';
-import sueter1 from '/src/assets/preview_assets/superior/sueter1.png';
-import sueter2 from '/src/assets/preview_assets/superior/sueter2.png';
-import sueter3 from '/src/assets/preview_assets/superior/sueter3.png'; // Importa todas las imágenes de suéteres necesarias
 
 // Función para importar todas las imágenes de una carpeta
-const PrendaSuperiorImages = [
-    { src: sueter1, alt: 'Sueter 1' },
-    { src: sueter2, alt: 'Sueter 2' },
-    { src: sueter3, alt: 'Sueter 3' },
-];
 
-const PrendaInferiorImages = [
-    { src: pantalon1, alt: 'Pantalon 1' },
-    { src: pantalon2, alt: 'Pantalon 2' },
-    { src: pantalon3, alt: 'Pantalon 3' },
-];
+const PrendaSuperiorImages = Object.entries(import.meta.glob('../../../../public/img/superior/*.{png,jpg,jpeg,svg}')).map(([path, resolver], index) => ({
+    src: path.replace('../../../../public/', '/'),
+    alt: `Sueter ${index + 1}`
+}));
 
-const CalzadoImages = [
-    { src: zapato1, alt: 'Zapato 1' },
-    { src: zapato2, alt: 'Zapato 2' },
-    { src: zapato3, alt: 'Zapato 3' },
-];
+const PrendaInferiorImages = Object.entries(import.meta.glob('../../../../public/img/inferior/*.{png,jpg,jpeg,svg}')).map(([path, resolver], index) => ({
+    src: path.replace('../../../../public/', '/'),
+    alt: `Pantalon ${index + 1}`
+}));
+
+const CalzadoImages = Object.entries(import.meta.glob('../../../../public/img/calzado/*.{png,jpg,jpeg,svg}')).map(([path, resolver], index) => ({
+    src: path.replace('../../../../public/', '/'),
+    alt: `Zapatos ${index + 1}`
+}));
+
+// const PrendaSuperiorImages = [
+//     { src: sueter1, alt: 'Sueter 1' },
+//     { src: sueter2, alt: 'Sueter 2' },
+//     { src: sueter3, alt: 'Sueter 3' },
+// ];
+
+// const PrendaInferiorImages = [
+//     { src: pantalon1, alt: 'Pantalon 1' },
+//     { src: pantalon2, alt: 'Pantalon 2' },
+//     { src: pantalon3, alt: 'Pantalon 3' },
+// ];
+
+// const CalzadoImages = [
+//     { src: zapato1, alt: 'Zapato 1' },
+//     { src: zapato2, alt: 'Zapato 2' },
+//     { src: zapato3, alt: 'Zapato 3' },
+// ];
 
 const PreviewPage = () => {
     const [avatar, setAvatar] = useState({

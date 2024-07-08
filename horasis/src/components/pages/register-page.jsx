@@ -21,11 +21,11 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:5000/users/register', { name, last_name, email, password, verPassword, birth_date, weight, height })
+    axios.post('http://localhost:5000/auth/register', { name, last_name, email, password, verPassword, birth_date, weight, height })
       .then(result => {
         console.log(result)
         if (result.status == 201) {
-          navigate('/profile')
+          navigate('/')
         }
       }
       )

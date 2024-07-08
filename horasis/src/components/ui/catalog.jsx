@@ -4,7 +4,7 @@ import axios from 'axios';
 import { CiMenuBurger } from 'react-icons/ci';
 
 
-function Catalog(){
+function Catalog() {
 
     const [catalogData, setCatalogData] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -24,7 +24,7 @@ function Catalog(){
                 console.error(error)
             }
         }
-                
+
         fetchData();
 
     }, []);
@@ -33,31 +33,31 @@ function Catalog(){
         return <p>Cargando datos...</p>;
     }
 
-    const rows = catalogData.map( item=><ContentCard id={item._id.toString()} price={item.price} title={item.name} image_url={item.image_url } ></ContentCard>)
+    const rows = catalogData.map(item => <ContentCard id={item._id.toString()} price={item.price} title={item.name} image_url={item.image_url} ></ContentCard>)
     const categoryName = "General"
 
-    
-    
+
+
     return (
         <div className="catalogo-overview">
             {/* para las cosas del lado izquierdo */}
             <div className="catalogo-20">
-                <div className="catalog-side-nav">                  
-                    <h1 className="side-nav-title">Categorias</h1>       
+                <div className="catalog-side-nav">
+                    <h1 className="side-nav-title">Categorias</h1>
                     <ul className="side-nav-content">
                         <li className="snc-category"><a role="button" onClick={handleToggle} href="#"><CiMenuBurger /> Ofertas</a></li>
-                            <div className="snc-expanded" style={{display: isExpanded ? "block" : "none"}}>
-                                <ul>
-                                    <li className="snc-expanded-content">Nuevos</li>
-                                    <li className="snc-expanded-content">Descuentos</li>
-                                </ul>
-                            </div>
+                        <div className="snc-expanded" style={{ display: isExpanded ? "block" : "none" }}>
+                            <ul>
+                                <li className="snc-expanded-content">Nuevos</li>
+                                <li className="snc-expanded-content">Descuentos</li>
+                            </ul>
+                        </div>
                         <li><a role="button" onClick={handleToggle} href="#">Hombres</a></li>
-                        <li><a href=""><CiMenuBurger alignmentBaseline='central'  display={'inline-block'}/> Mujeres</a></li>
+                        <li><a href=""><CiMenuBurger alignmentBaseline='central' display={'inline-block'} /> Mujeres</a></li>
                         <li><a href="">Niños</a></li>
                         <li><a href="">Calzados</a></li>
                         <li><a href="">Sueterés</a></li>
-                        <li><a href="">Pantalones</a></li>          
+                        <li><a href="">Pantalones</a></li>
                     </ul>
                 </div>
             </div>
@@ -66,16 +66,15 @@ function Catalog(){
             <div className="catalogo-80">
                 <div className="catalogo-top-nav">
                     <p className="ctn-title">{categoryName}</p>
-                    <button className="ctn-button">Clasificar</button> <button className="ctn-button">Filtrar</button>
                 </div>
-                
+
                 <div className="catalogo-content">
                     <div className="row-catalogo">
                         {rows}
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
 

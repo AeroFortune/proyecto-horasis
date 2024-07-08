@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/users')
+const ShoppingCart = require('../models/carts')
 
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -11,10 +12,10 @@ require('dotenv').config()
 // Getting All
 router.get('/', async (req, res) => {
     try {
-      const users = await User.find()
-      res.json(users)
+        const users = await User.find()
+        res.json(users)
     } catch (err) {
-      res.status(500).json({ message: err.message })
+        res.status(500).json({ message: err.message })
     }
 })
 
@@ -27,42 +28,42 @@ router.get('/', async (req, res) => {
 router.patch('/:id', getUser, async (req, res) => {
     if (req.body.image_url) {
         res.product.image_url = req.body.image_url
-    } if (req.body.name != null){
+    } if (req.body.name != null) {
         res.product.name = req.body.name
-    } if (req.body.type != null){       
-        res.product.type = req.body.type    
-    } if (req.body.sizes != null){
+    } if (req.body.type != null) {
+        res.product.type = req.body.type
+    } if (req.body.sizes != null) {
         res.product.sizes = req.body.sizes
-    } 
+    }
 
     try {
         const updatedProduct = await res.product.save()
         res.json(updatedProduct)
     } catch (err) {
-        res.status(400).json({message: err.message          })
+        res.status(400).json({ message: err.message })
     }
-    
+
 })
 // Deleting One
 router.delete('/:id', getUser, async (req, res) => {
     try {
         await res.product.remove()
-        res.json({message: "Deleted successfully. "})
+        res.json({ message: "Deleted successfully. " })
     } catch (error) {
-        res.status(500).json( {message: error.message})
+        res.status(500).json({ message: error.message })
     }
 })
 // Getting IDs
-async function getUser(req, res, next){
+async function getUser(req, res, next) {
 
     let user
-    try {       
+    try {
         user = await User.findById(req.params.id)
-        if (user == null){
-            return res.status(404).json( {message: "Cannot find user."} )
+        if (user == null) {
+            return res.status(404).json({ message: "Cannot find user." })
         }
     } catch (err) {
-        return res.status(500).json( {message: err.message} )    
+        return res.status(500).json({ message: err.message })
     }
 
     res.user = user
@@ -77,12 +78,12 @@ router.post('/register', async (req, res) => {
 
     try {
 
-        await User.findOne({email: req.body.email.toLowerCase()}).then(
+        await User.findOne({ email: req.body.email.toLowerCase() }).then(
             user => {
-                if (user){
+                if (user) {
                     return res.json("E-mail ya en uso.")
                 }
-            }  
+            }
         );
 
         let user = new User({
@@ -97,42 +98,45 @@ router.post('/register', async (req, res) => {
             last_modified: new Date().toJSON()
         });
 
-        if (user.name == "" || user.last_name == "" || user.email == "" || user.birth_date == null || req.body.password == "" || req.body.verPassword == "" ){
-            res.json({
+        if (user.name == "" || user.last_name == "" || user.email == "" || user.birth_date == null || req.body.password == "" || req.body.verPassword == "") {
+            return res.json({
                 status: "Error!",
                 message: "Campos vacios, por favor llenarlos."
             })
-            return;
         } else if (!/^[a-zA-Z]*$/.test(user.name)) {
-            res.json({
+            return res.json({
                 status: "Error!",
                 message: "Nombre invalido."
             })
-            return;
-        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(user.email)){
-            res.json({
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(user.email)) {
+            return res.json({
                 status: "Error!",
                 message: "Correo con caracteres invalidos."
             })
-            return;
-        } else if (req.body.password < 8){
-            res.json({
+        } else if (req.body.password < 8) {
+            return res.json({
                 status: "Error!",
-                message: "Correo con caracteres invalidos."
+                message: "Contraseña debil."
             })
-            return; 
-        } else if (req.body.password != req.body.verPassword ){
-            res.json({
+        } else if (req.body.password != req.body.verPassword) {
+            return res.json({
                 status: "Error!",
                 message: "Las contraseñas no coinciden."
             })
-            return; 
+
         }
 
         user.setPassword(req.body.password.trim());
 
         const newUser = await user.save()
-        res.status(201).json(newUser)
+
+        const newShoppingCart = new ShoppingCart({
+            user_id: newUser._id,  // Asignar el _id del nuevo usuario
+            items: []  // Puedes inicializar el carrito con items si es necesario
+        });
+        await newShoppingCart.save();
+
+        return res.status(201).json(newUser)
 
     } catch (err) {
         res.status(400).json({ message: err.message })
@@ -144,7 +148,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
 
-    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(req.body.email)){
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(req.body.email)) {
         res.json({
             status: "Error!",
             message: "Correo con caracteres invalidos o que no existe."
@@ -155,14 +159,14 @@ router.post('/login', async (req, res) => {
     try {
         User.findOne({ email: req.body.email }).then(
             user => {
-                if (user){
-                    if (user.validPassword(req.body.password)){
+                if (user) {
+                    if (user.validPassword(req.body.password)) {
 
                         // Generar token
                         const token = jwt.sign({ email: user.email }, process.env.ACCESS_TOKEN_SECRET);
                         // const refreshToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
 
-                        return res.status(201).send({ message: "Bienvenido al sistema.", token: token,})
+                        return res.status(201).send({ message: "Bienvenido al sistema.", token: token, })
                     } else {
                         return res.status(401).send({ message: "Credenciales incorrectas." })
                     }
@@ -172,7 +176,7 @@ router.post('/login', async (req, res) => {
                 }
             }
         );
-        
+
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
@@ -181,7 +185,7 @@ router.post('/login', async (req, res) => {
 
 // Token
 
-function authenticateToken(req, res, next){
+function authenticateToken(req, res, next) {
 
     const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
 
@@ -217,8 +221,8 @@ router.get('/profile', authenticateToken, async (req, res) => {
 
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado.", message2: "req.user.email" });
-        }   
-        
+        }
+
         res.json(user); // Devolver el perfil del usuario encontrado
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -226,8 +230,8 @@ router.get('/profile', authenticateToken, async (req, res) => {
 });
 
 
-function generateAccessToken(user){
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '240m'}) 
+function generateAccessToken(user) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '240m' })
 }
 
 // User Profile

@@ -23,9 +23,7 @@ function PerfilUsuarioPage() {
         return <p>Cargando datos...</p>;
     }
 
-    if (error) {
-        return <p>Error viejo aaaa que hiciste uasdasdjasd</p>
-    }
+
 
     // Agregar INTERCEPTOR o MIDDLEWARE que detecte si tienes un token
     // si tienes token --> perfil ; si no tienes token --> pagina de registro/login

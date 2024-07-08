@@ -6,6 +6,8 @@ import {
 import { PrivateRoute } from "../components/hooks/require-auth";
 import CarritoPage from "../components/pages/carrito-page";
 import CatalogPage from "../components/pages/catalog-page";
+import CheckoutConfirmPage from "../components/pages/checkout-confirmed-page";
+import CheckoutPage from "../components/pages/checkout-page";
 import ContactPage from "../components/pages/contact-page";
 import HomePage from "../components/pages/home-page";
 import Login from "../components/pages/login-page";
@@ -117,12 +119,12 @@ const router = createBrowserRouter([
 
   {
     path: "/checkout",
-    element: <CatalogPage></CatalogPage>
+    element: <CheckoutPage></CheckoutPage>
   },
 
   {
-    path: "/checkout/confirm",
-    element: <CatalogPage></CatalogPage>
+    path: "/checkout/success",
+    element: <CheckoutConfirmPage></CheckoutConfirmPage>
   },
 
   // ADMINISTRACION

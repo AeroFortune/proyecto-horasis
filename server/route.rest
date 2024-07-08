@@ -14,11 +14,11 @@ POST http://localhost:5000/products
 Content-Type: application/json
 
 {
-    "image_url": "https://theyetee.com/cdn/shop/files/A_strangesadness_e20270a0-c962-4671-9203-129c5ffe7df7_640x.jpg?v=1719724093",
-    "name": "A Strange Sadness As Dusk Falls",
-    "price": "15.99",
-    "type": ["Sueter", "Ropa"],
-    "sizes": ["S", "XS", "XL"]
+    "image_url": "https://theyetee.com/cdn/shop/files/B_BunnyPileup-5Color_640x.jpg?v=1715005179",
+    "name": "Bunny Pile - Usagi Shima",
+    "price": "17.99",
+    "type": ["Sueter", "Ropa", "Cute"],
+    "sizes": ["S", "M", "L", "XS", "XL"]
 }
 
 
@@ -70,11 +70,8 @@ POST http://localhost:5000/carts
 Content-Type: application/json
 
 {
-    "user_id": "66861b8ed7ef37ffb6a607d3",
+    "user_id": "66861b8ed7ef37ffb6a607da",
     "items": {
-        "productId": "6688c381ef2c53ee4c44ab4d",
-        "quantity": "3",
-        "size": "L"
     }
 }
 

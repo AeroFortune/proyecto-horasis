@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth";
 import Footer from "../navigation/footer";
 import Header from "../navigation/header";
@@ -11,6 +12,7 @@ function CarritoPage() {
     const { user, error } = useAuth()
     const [cartItemsData, setCartItemsData] = useState(null);
     const [totalPrice, setTotalPrice] = useState(0);
+    const navigate = useNavigate();
 
     function getQuantity(productId) {
         if (!cartData) return null;
@@ -29,6 +31,11 @@ function CarritoPage() {
         });
 
         setTotalPrice(total);
+    };
+
+    const handleToCheckout = () => {
+        // Navegar a una ruta específica cuando se hace clic en el botón
+        navigate('/checkout');
     };
 
     useEffect(() => {
@@ -103,7 +110,7 @@ function CarritoPage() {
                     <div className="cart-summary">
                         <h2>Resumen</h2>
                         <h2>Total (Impuestos incluidos): <br /> ${totalPrice.toFixed(2)}</h2>
-                        <button className="checkout-button">Realizar pedido</button>
+                        <button className="checkout-button" onClick={handleToCheckout}>Check Out</button>
 
 
                     </div>

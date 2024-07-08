@@ -13,11 +13,7 @@ router.post('/', async (req, res) => {
 
     const shoppingCart = new ShoppingCart({
         user_id: req.body.user_id,
-        items: {
-            productId: req.body.items.productId,
-            quantity: req.body.items.quantity,
-            size: req.body.items.size
-        }
+        items: req.body.items
     })
 
     try {
